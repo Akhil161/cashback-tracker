@@ -1,0 +1,53 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1024" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#080E0A"/>
+      <stop offset="100%" stop-color="#0F2318"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+
+  <!-- Credit card rotated -12deg, centered ~512,500 -->
+  <g transform="rotate(-12,512,500)">
+    <!-- Card body -->
+    <rect x="156" y="278" width="712" height="448" rx="56" fill="#1A4A24"/>
+    <!-- Holographic stripe -->
+    <rect x="156" y="350" width="712" height="76" fill="#12361C" opacity="0.95"/>
+    <!-- EMV chip -->
+    <rect x="220" y="418" width="124" height="94" rx="16" fill="#C8A84B" opacity="0.95"/>
+    <rect x="240" y="438" width="84" height="54" rx="8" fill="#A0832E"/>
+    <line x1="240" y1="453" x2="324" y2="453" stroke="#C8A84B" stroke-width="2.5" opacity="0.5"/>
+    <line x1="240" y1="465" x2="324" y2="465" stroke="#C8A84B" stroke-width="2.5" opacity="0.5"/>
+    <line x1="240" y1="477" x2="324" y2="477" stroke="#C8A84B" stroke-width="2.5" opacity="0.5"/>
+    <!-- Contactless waves -->
+    <path d="M396 426 Q432 465 396 504" fill="none" stroke="#A5D6A7" stroke-width="9" stroke-linecap="round" opacity="0.55"/>
+    <path d="M374 406 Q432 465 374 524" fill="none" stroke="#A5D6A7" stroke-width="9" stroke-linecap="round" opacity="0.38"/>
+    <path d="M352 386 Q432 465 352 544" fill="none" stroke="#A5D6A7" stroke-width="8" stroke-linecap="round" opacity="0.22"/>
+    <!-- Card number dots -->
+    <circle cx="470" cy="596" r="14" fill="#A5D6A7" opacity="0.32"/>
+    <circle cx="508" cy="596" r="14" fill="#A5D6A7" opacity="0.32"/>
+    <circle cx="546" cy="596" r="14" fill="#A5D6A7" opacity="0.32"/>
+    <circle cx="584" cy="596" r="14" fill="#A5D6A7" opacity="0.32"/>
+    <circle cx="644" cy="596" r="14" fill="#A5D6A7" opacity="0.32"/>
+    <circle cx="682" cy="596" r="14" fill="#A5D6A7" opacity="0.32"/>
+    <circle cx="720" cy="596" r="14" fill="#A5D6A7" opacity="0.32"/>
+    <circle cx="758" cy="596" r="14" fill="#A5D6A7" opacity="0.32"/>
+    <!-- Bank name line -->
+    <rect x="580" y="420" width="220" height="14" rx="4" fill="#A5D6A7" opacity="0.18"/>
+    <rect x="580" y="448" width="160" height="10" rx="4" fill="#A5D6A7" opacity="0.12"/>
+  </g>
+
+  <!-- Gold ₹ — dominant element -->
+  <text x="514" y="582" text-anchor="middle"
+        font-size="400" font-weight="700"
+        fill="#FFB300"
+        font-family="system-ui,-apple-system,Helvetica,Arial,sans-serif">₹</text>
+
+  <!-- Subtle gold sparkle dots -->
+  <circle cx="182" cy="194" r="16" fill="#FFB300" opacity="0.65"/>
+  <circle cx="848" cy="168" r="11" fill="#FFB300" opacity="0.48"/>
+  <circle cx="872" cy="852" r="15" fill="#FFB300" opacity="0.55"/>
+  <circle cx="158" cy="864" r="10" fill="#FFB300" opacity="0.38"/>
+</svg>

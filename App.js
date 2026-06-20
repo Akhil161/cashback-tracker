@@ -10,11 +10,13 @@ import AddEditCardScreen from './src/screens/AddEditCardScreen';
 import TransactionsScreen from './src/screens/TransactionsScreen';
 import AddEditTransactionScreen from './src/screens/AddEditTransactionScreen';
 import SummaryScreen from './src/screens/SummaryScreen';
+import AddPreviousRecordScreen from './src/screens/AddPreviousRecordScreen';
 import DataScreen from './src/screens/DataScreen';
 
 const Tab = createBottomTabNavigator();
 const CardsStack = createNativeStackNavigator();
 const TxnStack = createNativeStackNavigator();
+const SummaryStack = createNativeStackNavigator();
 
 const HEADER = {
   headerStyle: { backgroundColor: '#1B5E20' },
@@ -45,6 +47,19 @@ function TransactionsNavigator() {
         options={({ route }) => ({ title: route.params?.transaction ? 'Edit Transaction' : 'Add Transaction' })}
       />
     </TxnStack.Navigator>
+  );
+}
+
+function SummaryNavigator() {
+  return (
+    <SummaryStack.Navigator screenOptions={HEADER}>
+      <SummaryStack.Screen name="SummaryMain" component={SummaryScreen} options={{ title: 'Monthly Summary' }} />
+      <SummaryStack.Screen
+        name="AddPreviousRecord"
+        component={AddPreviousRecordScreen}
+        options={({ route }) => ({ title: route.params?.record ? 'Edit Previous Record' : 'Add Previous Record' })}
+      />
+    </SummaryStack.Navigator>
   );
 }
 
@@ -79,11 +94,7 @@ export default function App() {
       >
         <Tab.Screen name="Cards" component={CardsNavigator} />
         <Tab.Screen name="Transactions" component={TransactionsNavigator} />
-        <Tab.Screen
-          name="Summary"
-          component={SummaryScreen}
-          options={{ headerShown: true, ...HEADER, title: 'Monthly Summary' }}
-        />
+        <Tab.Screen name="Summary" component={SummaryNavigator} />
         <Tab.Screen
           name="Data"
           component={DataScreen}

@@ -4,8 +4,8 @@ import * as DocumentPicker from 'expo-document-picker';
 
 const TEMP_DIR = FileSystem.cacheDirectory;
 
-export const exportJSON = async (cards, transactions) => {
-  const data = { version: 1, exportedAt: new Date().toISOString(), cards, transactions };
+export const exportJSON = async (cards, transactions, previousRecords = []) => {
+  const data = { version: 2, exportedAt: new Date().toISOString(), cards, transactions, previousRecords };
   const json = JSON.stringify(data, null, 2);
   const filename = `cashback-backup-${new Date().toISOString().split('T')[0]}.json`;
   const path = TEMP_DIR + filename;
@@ -67,5 +67,9 @@ export const importJSON = async () => {
     throw new Error('Invalid backup file. Missing cards or transactions.');
   }
 
-  return { cards: parsed.cards, transactions: parsed.transactions };
+  return {
+    cards: parsed.cards,
+    transactions: parsed.transactions,
+    previousRecords: parsed.previousRecords || [],
+  };
 };

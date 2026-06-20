@@ -1,6 +1,22 @@
 export const generateId = () =>
   Date.now().toString(36) + Math.random().toString(36).substring(2, 9);
 
+// ── Rounding ─────────────────────────────────────────────────
+export const ROUNDING_MODES = [
+  { key: 'none',    label: 'Off',          symbol: '—',  desc: 'Exact decimal  e.g. ₹31.28' },
+  { key: 'floor',   label: 'Round Down ↓', symbol: '↓',  desc: 'Always lower   e.g. ₹31.28 → ₹31' },
+  { key: 'nearest', label: 'Round Nearest',symbol: '≈',  desc: 'Math rounding  e.g. ₹31.65 → ₹32' },
+  { key: 'ceil',    label: 'Round Up ↑',   symbol: '↑',  desc: 'Always higher  e.g. ₹31.28 → ₹32' },
+];
+
+export const applyRounding = (value, mode) => {
+  if (!mode || mode === 'none') return +value.toFixed(2);
+  if (mode === 'floor')   return Math.floor(value);
+  if (mode === 'nearest') return Math.round(value);
+  if (mode === 'ceil')    return Math.ceil(value);
+  return +value.toFixed(2);
+};
+
 /**
  * Calculate reward for a transaction given the card config.
  * Returns { rewardEarned, rewardValue } where:
@@ -10,16 +26,18 @@ export const generateId = () =>
 export const calculateReward = (amount, card) => {
   if (!card) return { rewardEarned: 0, rewardValue: 0 };
   const amt = parseFloat(amount) || 0;
+  const rounding = card.roundingMode || 'none';
 
   if (card.rewardType === 'cashback') {
     const pct = parseFloat(card.rewardPercent) || 0;
-    const cashback = (amt * pct) / 100;
-    return { rewardEarned: +cashback.toFixed(2), rewardValue: +cashback.toFixed(2) };
+    const raw = (amt * pct) / 100;
+    const cashback = applyRounding(raw, rounding);
+    return { rewardEarned: cashback, rewardValue: cashback };
   } else {
-    // points
-    const ppr = parseFloat(card.pointsPerRupee) || 0;   // points earned per ₹1
-    const p1r = parseFloat(card.pointsFor1Rupee) || 1;  // points needed to get ₹1
-    const points = +(amt * ppr).toFixed(0);
+    const ppr = parseFloat(card.pointsPerRupee) || 0;
+    const p1r = parseFloat(card.pointsFor1Rupee) || 1;
+    const rawPoints = amt * ppr;
+    const points = applyRounding(rawPoints, rounding);
     const value = +(points / p1r).toFixed(2);
     return { rewardEarned: points, rewardValue: value };
   }

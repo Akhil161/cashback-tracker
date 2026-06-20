@@ -4,7 +4,7 @@ import {
   StyleSheet, Alert, SafeAreaView, ActivityIndicator,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { loadCards, loadTransactions, clearAllData, importAllData } from '../storage/storage';
+import { loadCards, loadTransactions, loadPreviousRecords, clearAllData, importAllData } from '../storage/storage';
 import { exportJSON, exportCSV, importJSON } from '../utils/exportImport';
 import { COLORS } from '../utils/helpers';
 
@@ -26,7 +26,8 @@ export default function DataScreen() {
     run('json', async () => {
       const cards = await loadCards();
       const transactions = await loadTransactions();
-      await exportJSON(cards, transactions);
+      const previousRecords = await loadPreviousRecords();
+      await exportJSON(cards, transactions, previousRecords);
     });
 
   const handleExportCSV = () =>

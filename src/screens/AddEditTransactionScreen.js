@@ -27,6 +27,7 @@ export default function AddEditTransactionScreen({ route, navigation }) {
   const [date, setDate] = useState(existing?.date || todayISO());
   const [notes, setNotes] = useState(existing?.notes || '');
   const [hasCashback, setHasCashback] = useState(existing?.hasCashback ?? true);
+  const [billingStatus, setBillingStatus] = useState(existing?.billingStatus || 'billed');
   const [showCardPicker, setShowCardPicker] = useState(false);
   const [showCategoryPicker, setShowCategoryPicker] = useState(false);
 
@@ -56,6 +57,7 @@ export default function AddEditTransactionScreen({ route, navigation }) {
       date,
       notes: notes.trim(),
       hasCashback,
+      billingStatus,
       rewardEarned: hasCashback && reward ? reward.rewardEarned : 0,
       rewardValue: hasCashback && reward ? reward.rewardValue : 0,
     };
@@ -163,6 +165,36 @@ export default function AddEditTransactionScreen({ route, navigation }) {
             trackColor={{ false: '#E0E0E0', true: COLORS.primaryLight }}
             thumbColor={hasCashback ? COLORS.primary : '#BDBDBD'}
           />
+        </View>
+
+        {/* Billing Status Toggle */}
+        <View style={styles.billingRow}>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.cashbackLabel}>Billing Status</Text>
+            <Text style={styles.cashbackSub}>
+              {billingStatus === 'unbilled'
+                ? '⏳ Unbilled — cashback not yet credited by bank'
+                : '✅ Billed — cashback processed in statement'}
+            </Text>
+          </View>
+          <View style={styles.billingToggle}>
+            <TouchableOpacity
+              style={[styles.billingBtn, billingStatus === 'billed' && styles.billingBtnActive]}
+              onPress={() => setBillingStatus('billed')} activeOpacity={0.8}
+            >
+              <Text style={[styles.billingBtnText, billingStatus === 'billed' && styles.billingBtnTextActive]}>
+                ✅ Billed
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.billingBtn, billingStatus === 'unbilled' && styles.billingBtnUnbilledActive]}
+              onPress={() => setBillingStatus('unbilled')} activeOpacity={0.8}
+            >
+              <Text style={[styles.billingBtnText, billingStatus === 'unbilled' && styles.billingBtnTextActive]}>
+                ⏳ Unbilled
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         {/* Reward Preview */}
@@ -310,4 +342,15 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.bg, alignItems: 'center',
   },
   modalCloseText: { fontSize: 15, fontWeight: '600', color: COLORS.textSub },
+  billingRow: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    backgroundColor: COLORS.card, borderRadius: 14, padding: 14, marginBottom: 16,
+    borderWidth: 1.5, borderColor: COLORS.border, gap: 12,
+  },
+  billingToggle: { flexDirection: 'row', borderRadius: 10, overflow: 'hidden', borderWidth: 1.5, borderColor: COLORS.border },
+  billingBtn: { paddingHorizontal: 12, paddingVertical: 8, backgroundColor: COLORS.card },
+  billingBtnActive: { backgroundColor: COLORS.primary },
+  billingBtnUnbilledActive: { backgroundColor: '#FF8F00' },
+  billingBtnText: { fontSize: 12, fontWeight: '700', color: COLORS.textSub },
+  billingBtnTextActive: { color: '#fff' },
 });

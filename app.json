@@ -5,10 +5,15 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
+    "icon": "./assets/icon.png",
     "android": {
       "package": "com.cashbacktracker.app",
       "versionCode": 1,
-      "newArchEnabled": false
+      "newArchEnabled": false,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#080E0A"
+      }
     },
     "plugins": [
       "expo-document-picker",
