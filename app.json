@@ -7,10 +7,12 @@
     "userInterfaceStyle": "light",
     "android": {
       "package": "com.cashbacktracker.app",
-      "versionCode": 1
+      "versionCode": 1,
+      "newArchEnabled": false
     },
     "plugins": [
-      "expo-document-picker"
+      "expo-document-picker",
+      "expo-font"
     ],
     "extra": {
       "eas": {
